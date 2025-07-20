@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_package = "com.example.demo.grpc";
+option java_outer_classname = "FilmeServiceProto";
+
+package filmes;
+
+service FilmeService {
+  rpc BuscarFilme (FilmeRequest) returns (FilmeResponse);
+}
+
+message FilmeRequest {
+  string nome = 1;
+}
+
+message FilmeResponse {
+  string titulo = 1;
+  string diretor = 2;
+}
