@@ -18,4 +18,9 @@ public class FilmeController {
     public FilmeModel buscarFilme(@PathVariable String titulo) {
         return omdbClientPort.buscarFilme(titulo);
     }
+
+    @GetMapping("/id/{id}")
+    public FilmeModel buscarFilmePorId(@PathVariable String id) {
+        return omdbClientPort.buscarFilmePorId(id);
+    }
 }

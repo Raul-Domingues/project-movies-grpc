@@ -20,16 +20,39 @@ public class OmdbServiceAdapter implements OmdbClientPort {
 
     @Override
     public FilmeModel buscarFilme(String titulo) {
-        FilmeModel response = webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .queryParam("t", titulo)
-                        .queryParam("apikey", apiKey)
-                        .build())
-                .retrieve()
-                .bodyToMono(FilmeModel.class)
-                .block();
+        try {
+            FilmeModel response = webClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .queryParam("t", titulo)
+                            .queryParam("apikey", apiKey)
+                            .build())
+                    .retrieve()
+                    .bodyToMono(FilmeModel.class)
+                    .block();
 
-        System.out.println("Response from OMDB: " + response);
-        return response;
+            System.out.println("Response from OMDB: " + response);
+            return response;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public FilmeModel buscarFilmePorId(String id) {
+        try {
+            FilmeModel response = webClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .queryParam("i", id)
+                            .queryParam("apikey", apiKey)
+                            .build())
+                    .retrieve()
+                    .bodyToMono(FilmeModel.class)
+                    .block();
+
+            System.out.println("Response from OMDB by ID: " + response);
+            return response;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
