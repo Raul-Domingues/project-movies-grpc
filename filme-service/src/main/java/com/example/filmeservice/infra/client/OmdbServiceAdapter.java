@@ -10,49 +10,28 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class OmdbServiceAdapter implements OmdbClientPort {
 
     private final WebClient webClient;
+    private final String apiKey;
 
-    public OmdbServiceAdapter(WebClient webClient) {
+    public OmdbServiceAdapter(WebClient webClient, @Value("${omdb.api.key}") String apiKey) {
         this.webClient = webClient;
+        this.apiKey = apiKey;
     }
-
-    @Value("${omdb.api.key}")
-    private String apiKey;
 
     @Override
     public FilmeModel buscarFilme(String titulo) {
-        try {
-            FilmeModel response = webClient.get()
-                    .uri(uriBuilder -> uriBuilder
-                            .queryParam("t", titulo)
-                            .queryParam("apikey", apiKey)
-                            .build())
-                    .retrieve()
-                    .bodyToMono(FilmeModel.class)
-                    .block();
-
-            System.out.println("Response from OMDB: " + response);
-            return response;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder.queryParam("t", titulo).queryParam("apikey", apiKey).build())
+                .retrieve()
+                .bodyToMono(FilmeModel.class)
+                .block();
     }
 
     @Override
     public FilmeModel buscarFilmePorId(String id) {
-        try {
-            FilmeModel response = webClient.get()
-                    .uri(uriBuilder -> uriBuilder
-                            .queryParam("i", id)
-                            .queryParam("apikey", apiKey)
-                            .build())
-                    .retrieve()
-                    .bodyToMono(FilmeModel.class)
-                    .block();
-
-            System.out.println("Response from OMDB by ID: " + response);
-            return response;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder.queryParam("i", id).queryParam("apikey", apiKey).build())
+                .retrieve()
+                .bodyToMono(FilmeModel.class)
+                .block();
     }
 }

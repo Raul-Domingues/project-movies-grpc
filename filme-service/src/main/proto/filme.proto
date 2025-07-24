@@ -1,4 +1,5 @@
 syntax = "proto3";
+import "google/protobuf/empty.proto";
 
 option java_package = "com.example.filmeservice.grpc";
 option java_outer_classname = "FilmeServiceProto";
@@ -8,24 +9,29 @@ package filmes;
 service FilmeService {
   rpc BuscarFilme (FilmeRequest) returns (FilmeResponse);
   rpc BuscarFilmePorId (FilmeIdRequest) returns (FilmeResponse);
+  rpc MarcarFavorito(FavoritoRequest) returns (google.protobuf.Empty);
+}
+
+message FavoritoRequest {
+  string imdbID = 1;
 }
 
 message FilmeIdRequest {
-  string Id = 1;
+  string id = 1;
 }
 
 message FilmeRequest {
-  string Title = 1;
+  string title = 1;
 }
 
 message FilmeResponse {
-  string Title = 1;
-  string Year = 2;
-  string Genre = 3;
-  string Director = 4;
-  string Plot = 5;
-  string Poster = 6;
+  string title = 1;
+  string year = 2;
+  string genre = 3;
+  string director = 4;
+  string plot = 5;
+  string poster = 6;
   string imdbRating = 7;
   string imdbID = 8;
-  string Type = 9;
+  string type = 9;
 }
