@@ -12,22 +12,22 @@ import java.time.LocalDateTime;
 @Component
 public class FavoriteRepositoryAdapter implements FavoriteRepositoryPort {
 
-    private final JpaFavoritesRepository repository;
-    private final OmdbClientPort omdbClient;
+    private final JpaFavoritesRepository jpaFavoritesRepository;
+    private final OmdbClientPort omdbClientPort;
 
-    public FavoriteRepositoryAdapter(JpaFavoritesRepository repository,
-                                     OmdbClientPort omdbClient) {
-        this.repository = repository;
-        this.omdbClient = omdbClient;
+    public FavoriteRepositoryAdapter(JpaFavoritesRepository jpaFavoritesRepository,
+                                     OmdbClientPort omdbClientPort) {
+        this.jpaFavoritesRepository = jpaFavoritesRepository;
+        this.omdbClientPort = omdbClientPort;
     }
 
     @Override
     public void save(String imdbID) {
-        MovieModel movie = omdbClient.findMovieById(imdbID);
+        MovieModel movie = omdbClientPort.findMovieById(imdbID);
         FavoriteMovieEntity entity = new FavoriteMovieEntity();
         entity.setImdbID(movie.imdbID());
         entity.setTitle(movie.Title());
         entity.setAddedDate(LocalDateTime.now());
-        repository.save(entity);
+        jpaFavoritesRepository.save(entity);
     }
 }
