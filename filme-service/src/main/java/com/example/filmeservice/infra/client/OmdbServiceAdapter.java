@@ -1,6 +1,6 @@
 package com.example.filmeservice.infra.client;
 
-import com.example.filmeservice.domain.models.FilmeModel;
+import com.example.filmeservice.domain.models.MovieModel;
 import com.example.filmeservice.domain.ports.output.OmdbClientPort;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -18,20 +18,26 @@ public class OmdbServiceAdapter implements OmdbClientPort {
     }
 
     @Override
-    public FilmeModel buscarFilme(String titulo) {
+    public MovieModel fetchMovie(String title) {
         return webClient.get()
-                .uri(uriBuilder -> uriBuilder.queryParam("t", titulo).queryParam("apikey", apiKey).build())
+                .uri(uriBuilder -> uriBuilder
+                        .queryParam("t", title)
+                        .queryParam("apikey", apiKey)
+                        .build())
                 .retrieve()
-                .bodyToMono(FilmeModel.class)
+                .bodyToMono(MovieModel.class)
                 .block();
     }
 
     @Override
-    public FilmeModel buscarFilmePorId(String id) {
+    public MovieModel fetchMovieById(String id) {
         return webClient.get()
-                .uri(uriBuilder -> uriBuilder.queryParam("i", id).queryParam("apikey", apiKey).build())
+                .uri(uriBuilder -> uriBuilder
+                        .queryParam("i", id)
+                        .queryParam("apikey", apiKey)
+                        .build())
                 .retrieve()
-                .bodyToMono(FilmeModel.class)
+                .bodyToMono(MovieModel.class)
                 .block();
     }
 }
