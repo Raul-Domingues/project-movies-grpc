@@ -22,7 +22,7 @@ public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase 
 
     @Override
     public void searchMovie(MovieServiceProto.MovieRequest request, StreamObserver<MovieServiceProto.MovieResponse> responseObserver) {
-        MovieModel movie = omdbClient.fetchMovie(request.getTitle());
+        MovieModel movie = omdbClient.findMovie(request.getTitle());
         responseObserver.onNext(toProto(movie));
         responseObserver.onCompleted();
     }

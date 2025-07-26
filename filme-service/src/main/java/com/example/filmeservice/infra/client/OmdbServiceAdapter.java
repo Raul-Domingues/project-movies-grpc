@@ -18,7 +18,7 @@ public class OmdbServiceAdapter implements OmdbClientPort {
     }
 
     @Override
-    public MovieModel fetchMovie(String title) {
+    public MovieModel findMovie(String title) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .queryParam("t", title)
@@ -30,7 +30,7 @@ public class OmdbServiceAdapter implements OmdbClientPort {
     }
 
     @Override
-    public MovieModel fetchMovieById(String id) {
+    public MovieModel findMovieById(String id) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .queryParam("i", id)

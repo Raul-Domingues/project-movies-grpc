@@ -1,0 +1,37 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+option java_package = "com.example.filmeservice.grpc";
+option java_outer_classname = "MovieServiceProto";
+
+package movies;
+
+service MovieService {
+  rpc SearchMovie (MovieRequest) returns (MovieResponse);
+  rpc SearchMovieById (MovieIdRequest) returns (MovieResponse);
+  rpc MarkFavorite (FavoriteRequest) returns (google.protobuf.Empty);
+}
+
+message FavoriteRequest {
+  string imdbID = 1;
+}
+
+message MovieIdRequest {
+  string id = 1;
+}
+
+message MovieRequest {
+  string title = 1;
+}
+
+message MovieResponse {
+  string title = 1;
+  string year = 2;
+  string genre = 3;
+  string director = 4;
+  string plot = 5;
+  string poster = 6;
+  string imdbRating = 7;
+  string imdbID = 8;
+  string type = 9;
+}

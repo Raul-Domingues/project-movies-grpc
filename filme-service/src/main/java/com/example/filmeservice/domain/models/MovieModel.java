@@ -1,6 +1,6 @@
 package com.example.filmeservice.domain.models;
 
-public record FilmeModel(
+public record MovieModel(
         String Title,
         String Year,
         String Genre,

@@ -23,7 +23,7 @@ public class FavoriteRepositoryAdapter implements FavoriteRepositoryPort {
 
     @Override
     public void save(String imdbID) {
-        MovieModel movie = omdbClient.fetchMovieById(imdbID);
+        MovieModel movie = omdbClient.findMovieById(imdbID);
         FavoriteMovieEntity entity = new FavoriteMovieEntity();
         entity.setImdbID(movie.imdbID());
         entity.setTitle(movie.Title());
