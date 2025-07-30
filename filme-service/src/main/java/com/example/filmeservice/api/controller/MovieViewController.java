@@ -5,6 +5,7 @@ import com.example.filmeservice.grpc.MovieServiceProto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -12,10 +13,8 @@ public class MovieViewController {
 
     private final MovieServiceGrpc.MovieServiceBlockingStub grpcStub;
 
-    public MovieViewController(MovieServiceGrpc.MovieServiceBlockingStub grpcStub,
-                               Model model) {
+    public MovieViewController(MovieServiceGrpc.MovieServiceBlockingStub grpcStub) {
         this.grpcStub = grpcStub;
-        model.addAttribute("movie", MovieServiceProto.MovieResponse.newBuilder().build());
     }
 
     @PostMapping("/search-movie")
@@ -25,8 +24,9 @@ public class MovieViewController {
                 .build();
         MovieServiceProto.MovieResponse response = grpcStub.searchMovie(request);
         model.addAttribute("movie", response);
-        return "home";
+        return "home"; // certifique-se de que o nome da página é "home.html"
     }
+
 
     @PostMapping("/favorite")
     public String favorite(@RequestParam String imdbID) {

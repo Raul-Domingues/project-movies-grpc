@@ -7,7 +7,7 @@ import com.example.filmeservice.grpc.MovieServiceGrpc;
 import com.example.filmeservice.grpc.MovieServiceProto;
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
-import org.springframework.grpc.server.service.GrpcService;
+import net.devh.boot.grpc.server.service.GrpcService;
 
 @GrpcService
 public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase {
@@ -18,6 +18,7 @@ public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase 
     public MovieServiceGrpcImpl(OmdbClientPort omdbClient, FavoriteRepositoryPort favoriteRepository) {
         this.omdbClient = omdbClient;
         this.favoriteRepository = favoriteRepository;
+        System.out.println("MovieServiceGrpcImpl foi instanciado!");
     }
 
     @Override
