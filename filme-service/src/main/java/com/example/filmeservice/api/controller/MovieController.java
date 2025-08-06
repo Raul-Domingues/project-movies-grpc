@@ -44,5 +44,4 @@ public class MovieController {
         }
         return "home";
     }
-
 }
