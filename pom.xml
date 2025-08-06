@@ -12,7 +12,6 @@
 
 	<modules>
 		<module>filme-service</module>
-		<module>app-web</module>
 	</modules>
 
 	<properties>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buscar Filme</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<header>
+    <h2><span class="title">Filmes</span> <span class="gradient-text">Populares</span></h2>
+    <p class="subtitle">Descubra os filmes mais populares do momento</p>
+</header>
+
+<section class="search-section">
+    <form th:action="@{/search-movie}" method="get" class="search-form">
+        <input type="text" id="title" name="title" placeholder="Buscar filmes..." />
+        <button type="submit">Buscar</button>
+    </form>
+</section>
+
+<section class="movie-section" th:if="${movies != null and !movies.isEmpty()}">
+    <div class="movie-card" th:each="movie : ${movies}">
+        <h3 th:text="${movie.title}">Título</h3>
+        <p th:text="'Ano: ' + ${movie.year}">Ano</p>
+        <img th:src="${movie.posterUrl}" alt="Poster" />
+    </div>
+</section>
+<div th:if="${error}" class="error-message" th:text="${error}"></div>
+</body>
+</html>
