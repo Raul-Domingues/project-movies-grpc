@@ -1,5 +1,6 @@
 package com.example.filmeservice.infra.client;
 
+import com.example.filmeservice.domain.ports.output.TmdbClientPort;
 import com.example.filmeservice.infra.dto.MovieDto;
 import com.example.filmeservice.infra.grpc.TmdbSearchResponse;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class MovieService {
+public class MovieService implements TmdbClientPort {
 
     private final WebClient webClient;
 

@@ -1,13 +1,12 @@
 package com.example.filmeservice.domain.models;
 
-public record MovieModel(
-        String Title,
-        String Year,
-        String Genre,
-        String Director,
-        String Plot,
-        String Poster,
-        String imdbRating,
-        String imdbID,
-        String Type
-) {}
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class MovieModel {
+    private String id;
+    private String title;
+    private String year;
+    private String overview;
+    private String posterUrl;
+}
