@@ -1,30 +1,28 @@
 package com.example.filmeservice.api.controller;
 
-import com.example.filmeservice.grpc.MovieListResponse;
-import com.example.filmeservice.grpc.MovieRequest;
-import com.example.filmeservice.grpc.MovieServiceGrpc;
+import com.example.filmeservice.domain.ports.input.FindMoviePort;
+import com.example.filmeservice.infra.dto.MovieDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class MovieController {
 
-    private final MovieServiceGrpc.MovieServiceBlockingStub grpcStub;
+    private final FindMoviePort findMoviePort;
 
-    public MovieController(MovieServiceGrpc.MovieServiceBlockingStub grpcStub) {
-        this.grpcStub = grpcStub;
+    public MovieController(FindMoviePort findMoviePort) {
+        this.findMoviePort = findMoviePort;
     }
 
     @GetMapping("/search-movie")
     public String searchMovie(@RequestParam("title") String title, Model model) {
         try {
-            MovieRequest request = MovieRequest.newBuilder()
-                    .setTitle(title)
-                    .build();
-            MovieListResponse response = grpcStub.searchMovie(request);
-            model.addAttribute("movies", response.getMoviesList());
+            List<MovieDto> movies = findMoviePort.searchMovies(title);
+            model.addAttribute("movies", movies);
         } catch (Exception e) {
             model.addAttribute("error", "Erro ao buscar filme: " + e.getMessage());
         }
@@ -34,11 +32,8 @@ public class MovieController {
     @GetMapping("/")
     public String home(Model model) {
         try {
-            MovieRequest request = MovieRequest.newBuilder()
-                    .setTitle("popular")
-                    .build();
-            MovieListResponse response = grpcStub.searchMovie(request);
-            model.addAttribute("movies", response.getMoviesList());
+            List<MovieDto> movies = findMoviePort.searchMovies("popular");
+            model.addAttribute("movies", movies);
         } catch (Exception e) {
             model.addAttribute("error", "Erro ao carregar filmes: " + e.getMessage());
         }

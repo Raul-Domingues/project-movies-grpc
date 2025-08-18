@@ -1,4 +1,4 @@
-package com.example.filmeservice.infra.client;
+package com.example.filmeservice.infra.adapter;
 
 import com.example.filmeservice.domain.ports.output.TmdbClientPort;
 import com.example.filmeservice.infra.dto.MovieDto;
@@ -12,14 +12,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class MovieService implements TmdbClientPort {
+public class TmdbClientAdapter implements TmdbClientPort {
 
     private final WebClient webClient;
 
     @Value("${tmdb.api.key}")
     private String apiKey;
 
-    public MovieService(WebClient.Builder webClientBuilder) {
+    public TmdbClientAdapter(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder
                 .baseUrl("https://api.themoviedb.org/3")
                 .build();
